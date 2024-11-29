@@ -3,8 +3,9 @@ import { useState, useEffect } from "react";
 import { patchUrlMappings } from "@discord/embedded-app-sdk";
 
 const ToggleButton = () => {
-  const [toggleValue, setToggleValue] = useState(null);
-  const [error, setError] = useState(null);
+  // Define the type explicitly for `toggleValue` and `error`
+  const [toggleValue, setToggleValue] = useState<boolean | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     // Patch URL mappings for Firebase
@@ -19,7 +20,7 @@ const ToggleButton = () => {
       if (!response.ok) throw new Error('Failed to fetch data');
       const data = await response.json();
       setToggleValue(data);  // Set the current toggle value
-    } catch (error) {
+    } catch (error: any) {
       setError(error.message);
       console.error(error);  // Log error if any
     }
@@ -37,7 +38,7 @@ const ToggleButton = () => {
 
       if (!response.ok) throw new Error('Failed to update data');
       setToggleValue(newValue);  // Update the toggle value locally
-    } catch (error) {
+    } catch (error: any) {
       setError(error.message);
       console.error(error);  // Log error if any
     }

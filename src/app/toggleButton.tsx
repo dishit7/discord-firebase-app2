@@ -20,10 +20,14 @@ const ToggleButton = () => {
       if (!response.ok) throw new Error('Failed to fetch data');
       const data = await response.json();
       setToggleValue(data);  // Set the current toggle value
-    } catch (error: any) {
-      setError(error.message);
-      console.error(error);  // Log error if any
+    } catch (error: unknown) {
+    if (error instanceof Error) {
+        setError(error.message);
+    } else {
+        console.error('An unexpected error occurred', error);
     }
+}
+
   };
 
   // Toggle the current value by updating it in Firebase
@@ -38,10 +42,14 @@ const ToggleButton = () => {
 
       if (!response.ok) throw new Error('Failed to update data');
       setToggleValue(newValue);  // Update the toggle value locally
-    } catch (error: any) {
-      setError(error.message);
-      console.error(error);  // Log error if any
+    }catch (error: unknown) {
+    if (error instanceof Error) {
+        setError(error.message);
+    } else {
+        console.error('An unexpected error occurred', error);
     }
+}
+
   };
 
   return (
